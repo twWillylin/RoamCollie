@@ -4,7 +4,7 @@ export function splitEqual(cents, members) {
 }
 export function balances(trip) {
   const result=Object.fromEntries(trip.members.map(m=>[m,0]));
-  trip.expenses.forEach(e=>{result[e.payer]+=e.cents;Object.entries(e.shares).forEach(([m,n])=>result[m]-=n)});
+  trip.expenses.forEach(e=>{result[e.payer]=(result[e.payer]??0)+e.cents;Object.entries(e.shares).forEach(([m,n])=>{result[m]=(result[m]??0)-n})});
   return result;
 }
 export function settlements(trip) {

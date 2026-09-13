@@ -9,7 +9,7 @@ SQL 位於 `database/schema.sql`，預計搭配 PostgreSQL 16 以上。
 
 建議同一個 repository 保留前端、增加後端服務；部署時可由 Docker Compose 管理 API 與 PostgreSQL。正式環境的反向代理提供網頁並將 `/api` 導向後端，可用相同網域減少跨來源設定。PostgreSQL 僅開放給後端所在的私有網路，帳密只放在後端環境變數，不可使用 VITE_ 變數提供給前端。開發階段由 Vite proxy 轉送 `/api`。
 
-後端负责登入身分、行程權限、分帳計算、資料驗證、交易與資料讀寫；前端可預覽計算結果，但以後端儲存結果為準。可選 Fastify 或 Express；此階段不必引入微服務、Redis 或訊息佇列。
+後端負責登入身分、行程權限、分帳計算、資料驗證、交易與資料讀寫；前端可預覽計算結果，但以後端儲存結果為準。可選 Fastify 或 Express；此階段不必引入微服務、Redis 或訊息佇列。
 
 ## 六張表
 
@@ -84,7 +84,7 @@ settlements 記錄線下實際付款，不會真的扣款。初步流程：付�
 | PATCH /api/trips/:tripId/expenses/:expenseId | 修改支出與分攤，檢查 version |
 | DELETE /api/trips/:tripId/expenses/:expenseId | 軟刪除，檢查 version |
 | GET /api/trips/:tripId/balances | 總支出、每人餘額、建議轉帳 |
-| POST /api/trips/:tripId/settlements | 登記實際还款 |
+| POST /api/trips/:tripId/settlements | 登記實際還款 |
 | PATCH /api/trips/:tripId/settlements/:settlementId | 確認或作廢還款 |
 
 登入、登出、邀請、訪客綁定的 API 在選定登入模式後補充。後續若要同一行程同時使用 JPY/TWD 等多幣別，需新增原幣金額、幣別、匯率及換算基準金額，不能只解除 currency_code 的 CHECK 就視為支援換匯。
